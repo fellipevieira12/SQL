@@ -5,7 +5,7 @@ create table empresa(
   email varchar(255),
   telefone varchar(255),
   endereco varchar(255)
-);
+)
 
 create table entregador(
   id integer primary key,
@@ -14,33 +14,47 @@ create table entregador(
   cpf varchar(255),
   rg varchar(255),
   celular varchar(255)
-);
+)
 
 create table cliente(
   telefone varchar(255) primary key,
   nome varchar(255),
   endereco varchar(255),
   pontoreferencia varchar(255),
-  nascimento date 
-);
+  nascimento date
+)
 
 create table login(
   id integer primary key,
   email varchar(255),
   senha varchar(255),
   nivel_acesso integer
-);
+)
+
+-- Inserção de dados
+-- Cadastra um usuário na tabela login
 
 insert into login(id, email, senha, nivel_acesso)
-  values(1, 'l1@l1.com', '1234');
-  
+  values (1,'l1@l1.com','1234',0)
+
+-- Consulta de dados
+-- Exibe todos os registros da tabela login
+
 select *
 from login
 
-select id, email from login
+-- Consulta específica
+-- Exibe apenas o id e o email
+
+select id,
+  email
+from login
+
+-- Atualização de dados
+-- Atualiza o nível de acesso dos usuários
 
 update login
-  set nivel_acesso = 0
+set nivel_acesso = 0
 
 create table marmita(
   id integer primary key,
@@ -48,14 +62,14 @@ create table marmita(
   descricao mediumtext,
   tamanho varchar(255),
   valor varchar(255)
-);
+)
 
 create table pedido(
   id integer primary key,
-  status varchar (255),
+  status varchar(255),
   taxa_entrega varchar(255),
   data datetime
-);
+)
 
 create table item_pedido(
   id integer primary key,
@@ -63,4 +77,4 @@ create table item_pedido(
   descricao mediumtext,
   tamanho varchar(255),
   valor varchar(255)
-);
+)
