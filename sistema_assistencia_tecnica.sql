@@ -26,4 +26,129 @@ create table ordem_de_servico(
   cod_ordem int primary key comment "código da ordem",
   data datetime comment "data",
   defeito varchar(255) not null default 'ni' comment "defeito",
-  equipamento varchar(255) not null default 'ni' comment "equipamento"
+  equipamento varchar(255) not null default 'ni' comment "equipamento",
+  cod_cliente int not null default 0 comment "código do cliente",
+  cod_tecnico int not null default 0 comment "código do tecnico",
+  cod_final int not null default 0 comment "código final"
+)
+
+create table relacao_3(
+  cod_ordem int comment "código da ordem",
+  cod_servico int comment "código do servico"
+)
+
+-- Chaves estrangeiras
+-- Relacionamento entre serviço e ordem de serviço
+
+alter table relacao_3
+add constraint fk_servico
+foreign key(cod_servico)
+references servico(cod_servico)
+on delete cascade
+on update cascade
+
+alter table relacao_3
+add constraint fk_ordem_de_servico
+foreign key(cod_ordem)
+references ordem_de_servico(cod_ordem)
+on delete cascade
+on update cascade
+
+-- Chaves estrangeiras
+-- Relacionamento da ordem de serviço
+
+alter table ordem_de_servico
+add constraint fk_cliente
+foreign key(cod_cliente)
+references cliente(cod_cliente)
+on delete cascade
+on update cascade
+
+alter table ordem_de_servico
+add constraint fk_tecnico
+foreign key(cod_tecnico)
+references tecnico(cod_tecnico)
+on delete cascade
+on update cascade
+
+alter table ordem_de_servico
+add constraint fk_finalizacao
+foreign key(cod_final)
+references finalizacao(cod_final)
+on delete cascade
+on update cascade
+
+-- Inserção de dados
+-- Cadastro de clientes
+
+insert into cliente(cod_cliente,nome,empresa,telefone)
+  values (1,'jose','empresa a','11 1111 1111'),
+         (2,'joao','empresa b','22 2222 2222'),
+         (3,'maria','empresa c','33 3333 3333')
+
+-- Inserção de dados
+-- Cadastro de técnicos
+
+insert into tecnico(cod_tecnico,nome)
+  values (11,'t jose'),
+         (22,'t joao'),
+         (33,'t maria')
+
+-- Inserção de dados
+-- Cadastro de serviços
+
+insert into servico(cod_servico,atividade)
+  values (111,'colocar'),
+         (222,'tirar'),
+         (333,'formatar')
+
+-- Inserção de dados
+-- Cadastro de finalizações
+
+insert into finalizacao(cod_final,valor_total,data,data_entrega)
+  values (5555,10,'2001-01-01','2001-01-01'),
+         (6666,20,'2002-02-02','2002-02-02'),
+         (7777,30,'2003-03-03','2003-03-03')
+
+-- Inserção de dados
+-- Cadastro de ordens de serviço
+
+insert into ordem_de_servico(
+  cod_ordem,
+  data,
+  defeito,
+  equipamento,
+  cod_cliente,
+  cod_tecnico,
+  cod_final
+)
+  values (11111,'2001-01-01','falha 1','maquina 1',1,11,5555),
+         (22222,'2002-02-02','falha 2','maquina 2',2,22,6666),
+         (33333,'2003-03-03','falha 3','maquina 3',3,33,7777)
+
+-- Inserção de dados
+-- Relacionamento entre serviços e ordens
+
+insert into relacao_3(cod_servico,cod_ordem)
+  values (111,11111),
+         (222,22222),
+         (333,33333)
+
+-- Consulta de dados
+-- Exibe nome e telefone dos clientes
+
+select nome,
+  telefone
+from cliente
+
+-- Atualização de dados
+-- Atualiza a data de entrega
+
+update finalizacao
+set data_entrega = '1899-12-31'
+
+-- Consulta de dados
+-- Exibe todas as finalizações
+
+select *
+from finalizacao
