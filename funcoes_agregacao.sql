@@ -1,3 +1,9 @@
+/*
+ * Consulta SQL Avançado
+ * Prof. Gustavo Dias
+ * 2026-08-17
+ * Agregação, Operações e Agrupamento
+ */
 
 create table vendas(
   nf int not null primary key,
@@ -88,4 +94,7 @@ from vendas
 
 select nome_produto,
   sum(vlr_total) as "Valor Total por Produto",
-  sum(qtd_vendida) as "Quantidade Total por Produto"
+  sum(qtd_vendida) as "Quantidade Total por Produto",
+  sum(vlr_desconto) as "Valor Total de Desconto"
+from vendas
+group by 1
