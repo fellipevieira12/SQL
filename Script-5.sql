@@ -1,3 +1,0 @@
-DROP database biblioteca;
-
-
